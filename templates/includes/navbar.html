@@ -1,0 +1,33 @@
+<!-- Navigation -->
+
+<nav class="navbar" style="height:80px">
+
+    <div class="container">
+
+        <!-- Navbar brand -->
+        <a href="#" class="navbar-brand">
+            <img class="h-50" src="{{ url_for('static', filename='/analisis.svg') }}" alt="...">
+            {{app_data['project_name']}}
+        </a>
+        <!-- Navbar text -->
+        <span class="navbar-text text-monospace">v1.0</span> <!-- text-monospace = font-family shifted to monospace -->
+        <!-- Navbar nav -->
+        <ul class="navbar-nav d-none d-md-flex">
+            <!-- d-none = display: none, d-md-flex = display: flex on medium screens and up (width > 768px) -->
+            <li class="nav-item active">
+                <a href="#" class="nav-link">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">About</a>
+            </li>
+            <li class="nav-item">
+                <a href="/delete_all" style="color: red;" class="nav-link">Clean all database records</a>
+            </li>
+        </ul>
+        <button id="btn-moon" class="btn btn-action d-none d-md-flex ml-auto" type="button"
+            aria-label="Toggle dark mode">
+
+            <img src="{{ url_for('static', filename='/moon.svg') }}" style="width: 20px; margin: auto;" alt="">
+        </button>
+    </div>
+</nav>

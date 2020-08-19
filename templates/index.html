@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="content">
+    <div class="content-title" style="margin-bottom: 10px; font-size: 30px;">
+        Dashboard
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-3">
+            <div class="w-200">
+                <form action="/add_symbol" method="post">
+                    <label for="new-symbol">Enter new symbol</label>
+                    <input type="text" id="new-symbol" name="symbol" class="form-control"
+                        placeholder="Ticker symbol e.g AAPL">
+                    <input class="btn btn-success" style="margin-top: 5px;" type="submit" value="Submit">
+
+                </form>
+            </div>
+        </div>
+        <div class="col-9">
+            <div style="margin-bottom: 10px; font-size:20px; font-weight: lighter;">
+                Your saved symbols
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>24h %</th>
+                        <th>Last</th>
+                        <th>Realtime stats</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for symbol in symbols %}
+
+                    <tr>
+                        <th>{{symbol.s}}</th>
+
+                        {% if 0 > symbol.d[3] %}
+                        <td style="color: rgb(255, 61, 61);">{{symbol.d[3]}}</td>
+                        {% else %}
+                        <td style="color: rgb(40, 255, 40);">{{symbol.d[3]}}</td>
+                        {% endif %}
+
+                        <td>{{symbol.d[2]}}</td>
+                        <td><button class="btn btn-primary" type="button">Watch realtime</button></td>
+                        <td><button class="btn btn-danger" type="button">Delete</button></td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    {% for symbol in symbols %}
+    <h4>{{symbol.d[1]}}</h4>
+    <div class="row h-400">
+        <div class="col-4">
+            <div id='chart1-{{symbol.d[1]}}'>
+
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+
+
+</div>
+{% endblock %}

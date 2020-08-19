@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{{ app_data['description'] }}">
+    <meta name="keywords" content="{{ app_data['keywords'] }}">
+    <meta name="author" content="{{ app_data['author'] }}">
+    <link rel="icon" href="{{ url_for('static', filename='/analisis.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/index.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+    <title>{{ app_data['html_title'] }}</title>
+
+    <!-- Halfmoon CSS -->
+    <link href="https://cdn.jsdelivr.net/gh/halfmoonui/halfmoon@1.0.3/css/halfmoon.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body>
+    {% include 'includes/navbar.html' %}
+
+    <main role="main" class="container">
+        <div class="container">
+            {% block body %}
+            {% endblock %}
+        </div>
+
+    </main><!-- /.container -->
+
+    <!-- Halfmoon JS -->
+    <script src="https://cdn.jsdelivr.net/gh/halfmoonui/halfmoon@1.0.3/js/halfmoon.min.js"></script>
+    <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
+
+    {% if sdata %}
+    <script>
+        let symbolsdata = {{ sdata| tojson }};
+
+
+        for (let i = 0; i < symbolsdata.length; i++) {
+            let n = symbolsdata[i]
+
+            var options = {
+                series: [{
+                    name: "Serie",
+                    data: [n["activity"],  n["activity"],  n["activity"],  n["activity"],  n["activity"]]
+                }],
+                theme: {
+                    mode: 'dark',
+                },
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: false
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'straight'
+                },
+
+                title: {
+                    text: "Trend of " + n["name"],
+                    align: 'left',
+                    style: {
+                        color: '#fff'
+                    },
+                },
+                grid: {
+                    row: {
+                        colors: ['transparent'], // takes an array which will be repeated on columns
+                        opacity: 1
+                    },
+                },
+
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    
+                }
+            };
+
+            let name = '#chart1-' + n["name"]
+            plot(name, options)
+        }
+
+        function plot(n, o) {
+
+            var chart = new ApexCharts(document.querySelector(n), o);
+            chart.render();
+
+
+        }
+
+    </script>
+    {% else %}
+    <!-- no sdata -->
+    {% endif %}
+
+</body>
+
+</html>
